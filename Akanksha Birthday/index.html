@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Akanksha 🎉</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d1b2a;
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      color: #ffd700;
+      text-shadow: 2px 2px 5px #ff69b4;
+    }
+
+    .typewriter {
+      font-size: 1.4em;
+      margin-bottom: 30px;
+      height: 40px;
+    }
+
+    .slideshow {
+      max-width: 700px;
+      margin:  auto;
+      position: relative;
+    }
+
+    .slideshow img {
+      width: 70%;
+      height: auto;
+      display: none;
+      position: center;
+      margin-left: 90px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255, 192, 203, 0.6);
+    }
+
+    .caption {
+      font-size: 1.2em;
+      margin-top: 50px;
+      color: #00ffff;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+    }
+
+    #continueBtn {
+      display: none;
+      margin-top: 30px;
+      padding: 12px 25px;
+      font-size: 16px;
+      background: #00c7b7;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="fireworks"></canvas>
+  <div class="container">
+    <h1>Happy Birthday Akanksha 🎂❤️</h1>
+    <div class="typewriter" id="typewriter"></div>
+
+    <div class="slideshow">
+      <img src="images/photo1.jpg" alt="Memory 1" class="slide" data-caption="Your Smile Lights Up My World">
+      <img src="images/photo2.jpg" alt="Memory 2" class="slide" data-caption="Forever Grateful For You">
+      <img src="images/photo3.jpg" alt="Memory 3" class="slide" data-caption="Every Moment With You Is A Gift">
+      <img src="images/photo4.jpg" alt="Memory 4" class="slide" data-caption="You're My Favorite Person">
+      <img src="images/photo5.jpg" alt="Memory 5" class="slide" data-caption="Laughter With You Is My Favorite Sound">
+      <img src="images/photo6.jpg" alt="Memory 6" class="slide" data-caption="You Make Everything Brighter">
+      <img src="images/photo7.jpg" alt="Memory 7" class="slide" data-caption="Cherishing Us Forever">
+      <img src="images/photo8.jpg" alt="Memory 8" class="slide" data-caption="You deserve all the stars, but I hope today you get at least a galaxy of joy">
+      <img src="images/photo9.jpg" alt="Memory 9" class="slide" data-caption="Every memory with you feels like a photograph worth framing forever">
+      <img src="images/photo10.jpg" alt="Memory 10" class="slide" data-caption="Happy Birthday, Cutie!">
+      <div class="caption" id="caption"></div>
+    </div>
+
+    <button id="continueBtn">Go to the Surprise 🎁</button>
+
+    <audio id="bg-music" src="assets/audio/happy-birthday.mp3" preload="auto"></audio>
+  </div>
+  <audio id="bg-song" src="birthday.mp3" loop></audio>
+
+<script>
+  window.addEventListener("load", () => {
+    const song = document.getElementById("bg-song");
+
+    // Try playing after a small timeout
+    setTimeout(() => {
+      const playPromise = song.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          // Most browsers block autoplay with sound, unless interacted
+          console.log("Autoplay blocked. Trying again after user interaction.");
+          document.body.addEventListener("click", () => {
+            song.play();
+          }, { once: true });
+        });
+      }
+    }, 1500); // Wait for animations to settle
+  });
+</script>
+
+  <script>
+    // Fireworks canvas
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function createFirework() {
+      const x = random(0, canvas.width);
+      const y = random(0, canvas.height / 2);
+      const count = 50;
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count;
+        particles.push({
+          x,
+          y,
+          dx: Math.cos(angle) * random(2, 5),
+          dy: Math.sin(angle) * random(2, 5),
+          life: 100,
+          color: `hsl(${random(0, 360)}, 100%, 70%)`
+        });
+      }
+    }
+
+    function animate() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p, index) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        p.life--;
+        if (p.life <= 0) particles.splice(index, 1);
+      });
+
+      if (Math.random() < 0.05) createFirework();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Typewriter effect
+    const typewriterText = "Wishing you a day filled with love, laughter, and unforgettable memories 💖";
+    let i = 0;
+    function typeEffect() {
+      if (i < typewriterText.length) {
+        document.getElementById("typewriter").innerHTML += typewriterText.charAt(i);
+        i++;
+        setTimeout(typeEffect, 70);
+      }
+    }
+    typeEffect();
+
+    // Slideshow
+    const slides = document.querySelectorAll('.slide');
+    const caption = document.getElementById('caption');
+    let slideIndex = 0;
+    function showSlides() {
+      slides.forEach(s => s.style.display = "none");
+      slideIndex++;
+      if (slideIndex > slides.length) {
+        document.getElementById("continueBtn").style.display = "inline-block";
+        return;
+      }
+      slides[slideIndex - 1].style.display = "block";
+      caption.textContent = slides[slideIndex - 1].getAttribute('data-caption');
+      setTimeout(showSlides, 4000);
+    }
+    showSlides();
+
+    // Music on click
+    document.body.addEventListener("click", () => {
+      const music = document.getElementById("bg-music");
+      if (music) music.play();
+    }, { once: true });
+
+    // Continue button click
+    document.getElementById("continueBtn").onclick = () => {
+      window.location.href = "birthday_letter.html";
+    }
+  </script>
+</body>
+</html>

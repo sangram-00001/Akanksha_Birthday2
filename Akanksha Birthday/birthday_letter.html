@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Akanksha</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #000428, #004e92);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+    }
+
+    .reveal-btn {
+      background: #ff69b4;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+    }
+
+    .reveal-btn:hover {
+      background: #ff1493;
+    }
+
+    .letter {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px 40px;
+      border-radius: 20px;
+      max-width: 600px;
+      margin: auto;
+      display: none;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+      border: 2px solid #ff69b4;
+      animation: fadeIn 1.5s ease forwards;
+      color: #fff;
+      font-size: 1.1em;
+      text-align: left;
+    }
+
+    .letter h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.4em;
+      color: #ff8abf;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .letter p {
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+
+    .letter strong {
+      color: #ffc0cb;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .balloon {
+      position: absolute;
+      width: 40px;
+      height: 60px;
+      background: pink;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      animation: float 8s infinite ease-in;
+      opacity: 0.7;
+      z-index: 1;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0.7; }
+      100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+    }
+
+    .typewriter-text span {
+      display: inline;
+      white-space: pre-wrap;
+      border-right: 2px solid #fff;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: white; }
+    }
+
+    @media (max-width: 600px) {
+      .letter {
+        padding: 20px;
+        font-size: 1em;
+      }
+
+      .reveal-btn {
+        font-size: 1em;
+        padding: 12px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <button class="reveal-btn" onclick="showLetter()">🎁 Click to Open Your Birthday Letter</button>
+
+    <div class="letter" id="letter">
+      <h1>Happy Birthday, Akanksha 🎉</h1>
+      <div class="typewriter-text" id="typewriterText">
+        <!-- Typed text will appear here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional Music Autoplay (Update 'your-song.mp3' with your file) -->
+  <!--
+  <audio autoplay loop>
+    <source src="your-song.mp3" type="audio/mpeg" />
+  </audio>
+  -->
+
+  <!-- Balloons -->
+  <script>
+    function createBalloon() {
+      const balloon = document.createElement('div');
+      balloon.className = 'balloon';
+      balloon.style.left = Math.random() * 100 + 'vw';
+      balloon.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 8000);
+    }
+
+    setInterval(createBalloon, 400);
+
+    const letterText = `
+Dear Akanksha,
+
+On this special day, I just want to remind you how amazing you are. Your smile lights up my darkest days, and your laughter makes everything better.
+
+Even though we’re miles apart, my thoughts are always with you — especially today. I hope this birthday brings you all the happiness, love, and magic you deserve.
+
+May your dreams come true, your worries be few, and your heart always full of joy.
+
+Happy Birthday once again. You truly mean a lot to me.
+
+With lots of warmth,  
+❤️ Sangram
+`;
+
+    function showLetter() {
+      const letter = document.getElementById("letter");
+      const textDiv = document.getElementById("typewriterText");
+      letter.style.display = "block";
+      letter.scrollIntoView({ behavior: 'smooth' });
+
+      let i = 0;
+      const speed = 30;
+      const span = document.createElement("span");
+      textDiv.appendChild(span);
+
+      function typeWriter() {
+        if (i < letterText.length) {
+          span.textContent += letterText.charAt(i);
+          i++;
+          setTimeout(typeWriter, speed);
+        }
+      }
+      typeWriter();
+    }
+  </script>
+</body>
+</html>
